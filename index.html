@@ -1,0 +1,333 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>小狐狸的魔法之旅</title>
+    <style>
+        .left-out {
+            position: absolute;
+            left: 300px;
+            top: 300px;
+            z-index: 10;
+        }
+        .right-out {
+            position: absolute;
+            left: 1040px;
+            top: 300px;
+            z-index: 10;
+        }
+        .popWindow {
+            border: 2px solid red;
+            border-radius: 100px;
+            clear: both;
+            text-align: center;
+            top: -520px;
+            z-index: 200;
+            width: 560px;
+            height: 300px;
+            position: relative;
+            margin: 30px auto;
+            background: #FFFFFF;
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.618);
+            -moz-box-shadow: 0 8px 20px rgba(255, 0, 0, 0.618);
+            -webkit-box-shadow: 0 8px 20px rgba(255, 0, 0, 0.618);
+            text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
+            color: red;
+        }
+        .maskLayer {
+            background-color: black;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            filter: alpha(opacity=70);
+            opacity: 0.7;
+            z-index: 100;
+            position: absolute;
+        }
+    </style>
+    <link rel="stylesheet" href="default.css">
+    <link rel="stylesheet" href="arrow.css">
+
+</head>
+
+<body>
+    <audio src="hcg.mp3" autoplay></audio>
+    <audio id="water" src="water.mp3"></audio>
+    <h1>小狐狸的魔法之旅</h1>
+    <div class="arrow-outer left-out" onclick="LeftClick()">
+        <div class="arrow-outer">
+            <div class="arrow-shadow">
+            </div>
+        </div>
+        <div class="arrow-inner">
+        </div>
+    </div>
+    <div class="arrow-outer right-out" onclick="RightClick()">
+        <div class="arrow-outer">
+            <div class="arrow-shadow-right">
+            </div>
+        </div>
+        <div class="arrow-inner-right">
+        </div>
+    </div>
+    <div id="box">
+        <ul>
+            <li style="display:block; filter:alpha(opacity=100); opacity:1;">
+                <img src="images/1.jpg" alt="" />
+            </li>
+            <li>
+                <img src="images/2.jpg" alt="" />
+            </li>
+            <li>
+                <img src="images/3.jpg" alt="" />
+            </li>
+            <li>
+                <img src="images/4.jpg" alt="" />
+            </li>
+            <li>
+                <img src="images/5.jpg" alt="" />
+            </li>
+        </ul>
+        <ol>
+            <li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ol>
+    </div>
+    <div id="popWindow" class="popWindow" style="display: none;">
+        <div id="body-box">
+        </div>
+    </div>
+    <div id="maskLayer" class="maskLayer" style="display: none;">
+    </div>
+    <script type="text/javascript" src="move.js"></script>
+    <script src="model.js"></script>
+    <script>
+        var iNow = 0;
+
+        var oOl = document.getElementsByTagName('ol')[0];
+        var aLiOl = oOl.getElementsByTagName('li');
+
+        var oUl = document.getElementsByTagName('ul')[0];
+        var aLiUl = oUl.getElementsByTagName('li');
+
+        var iWidth = aLiUl[0].offsetWidth;
+
+        window.onload = function() {
+
+            for (var i = 1; i < aLiUl.length; i++) {
+                aLiUl[i].style.left = iWidth + 'px';
+            }
+
+            for (var i = 0; i < aLiOl.length; i++) {
+                aLiOl[i].index = i;
+                aLiOl[i].onmouseover = function() {
+                    for (var i = 0; i < aLiOl.length; i++) {
+                        aLiOl[i].className = '';
+                    }
+                    this.className = 'active';
+
+                    if (this.index > iNow) {
+                        aLiUl[this.index].style.left = iWidth + 'px';
+                        startMove(aLiUl[iNow], {
+                            left: -iWidth
+                        });
+                    } else if (this.index < iNow) {
+                        aLiUl[this.index].style.left = -iWidth + 'px';
+                        startMove(aLiUl[iNow], {
+                            left: iWidth
+                        });
+                    }
+                    startMove(aLiUl[this.index], {
+                        left: 0
+                    });
+                    iNow = this.index;
+                };
+            };
+        };
+
+        function LeftClick() {
+            for (var i = 0; i < aLiOl.length; i++) {
+                aLiOl[i].className = '';
+            }
+            if (iNow != 0) {
+                for (var i = 1; i < aLiUl.length; i++) {
+                    aLiUl[i].style.left = iWidth + 'px';
+                }
+                iNow--;
+                iPast = iNow + 1;
+                aLiOl[iNow].className = 'active';
+                aLiUl[iNow].style.left = -iWidth + 'px';
+                aLiUl[iPast].style.left = 0;
+                startMove(aLiUl[iPast], {
+                    left: iWidth
+                });
+                startMove(aLiUl[iNow], {
+                    left: 0
+                });
+            } else {
+                aLiOl[iNow].className = 'active';
+            }
+            Page = iNow + 1;
+        };
+
+        function RightClick() {
+            for (var i = 0; i < aLiOl.length; i++) {
+                aLiOl[i].className = '';
+            }
+            if (iNow != 4) {
+                for (var i = 1; i < aLiUl.length; i++) {
+                    aLiUl[i].style.left = iWidth + 'px';
+                }
+                iNow++;
+                iPast = iNow - 1;
+                aLiOl[iNow].className = 'active';
+                aLiUl[iNow].style.left = iWidth + 'px';
+                aLiUl[iPast].style.left = 0;
+                startMove(aLiUl[iPast], {
+                    left: -iWidth
+                });
+                startMove(aLiUl[iNow], {
+                    left: 0
+                });
+            } else {
+                aLiOl[iNow].className = 'active';
+            }
+            Page = iNow + 1;
+        };
+    </script>
+    <script>
+        var state = {
+            document: 0,
+            start: 1,
+            start_Onto: 2
+        }
+
+        var page = {
+            page1: 1,
+            page2: 2,
+            page3: 3,
+            page4: 4,
+            page5: 5
+        }
+
+        var pageState = {
+            page1: false,
+            page2: false,
+            page3: false,
+            page4: false,
+            page5: false
+        }
+        var Page = page.page1;
+        var model = state.document;
+        var GameStart = false;
+        var isCj = false;
+
+        function showDiv(ctx) {
+            document.getElementById('popWindow').style.display = 'block';
+            document.getElementById('maskLayer').style.display = 'block';
+            document.getElementById('body-box').innerHTML = ctx;
+        }
+
+        function closeDiv() {
+            document.getElementById('popWindow').style.display = 'none';
+            document.getElementById('maskLayer').style.display = 'none';
+        }
+        document.onkeydown = function(event) {
+            console.log(Page);
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            console.log(e.keyCode);
+            if (e && e.keyCode == 74) {
+                if (Page == page.page5 && isCj == true) {
+                    showDiv("<h5>也许有人曾捕星捉月 到天外去找寻不可思议</h5><h5>而如诗如画的人间 也会突然爆发万丈斑斓</h5><h5>没有人能预知时间 时间才是潘多拉的盒子</h5><h5>你不知道打开之后是什么 是好 是坏 甚至你不能拒绝去打开</h5><h5>直到某一天打开盒子的我 看见了你</h5><h5>终于明了你就是属于我的突然的爆发</h5><h5>以至于有你的每天都是万丈斑斓</h5><h5>包括那些还未曾到来的日子也是</h5>");
+                    document.getElementById('popWindow').style.height = '350px';
+                    model = state.start_Onto;
+                    document.getElementById('water').play();
+
+                }
+            }
+            isCj = false;
+            if (e && e.keyCode == 37) {
+                switch (model) {
+                    case state.document:
+                        LeftClick();
+                        break;
+                    case state.start:
+                        document.getElementById('body-box').innerHTML = "<h5>小狐狸甚至没有找到关掉这个窗口的方法！！！</h5><h5>呼呼呼！放松崔~最危险的地方就是最安全的！</h5><h5>最平常的方式就是宝贝GET到的下一步的钥匙！！！</h5><br><h3>加油加油崔！！！</h3><h3>我们家兔兔是最厉害的捏！！！</h3>";
+                        document.getElementById('water').play();
+                        break;
+                }
+                if (GameStart == true && Page == page.page1) {
+                    showDiv("<h5>兔兔又回到了最初的开始！！！</h5><h5>那么现在问题来了！！！</h5><h5>到底该怎样解开这一切！！！</h5><h5>小礼物君！在哪里！！！在天边还是眼前！！！是咒语，还是~~~</h5><h5>仁慈的天使告诉了兔兔~是一句咒语~</h5><h4>用你的手指去触碰键盘，去发现魔法之源~！！！</h4>");
+                    document.getElementById('water').play();
+                    model = state.start_Onto;
+                }
+            }
+            if (e && e.keyCode == 39) {
+                switch (model) {
+                    case state.document:
+                        RightClick();
+                        break;
+                }
+                if (Page == page.page5 && GameStart == false) {
+                    showDiv("<h5>小狐狸在想！难道酱紫就完了！什么都木有！！！但是！真的是吗~！！！<h5><h5>嘿嘿！到底！是怎么回事捏！！！聪明的兔兔要怎么挽救这场智商危机！！！</h5><h5>是爸比的阴谋！还是被欺骗的眼睛！是密室逃脱！还是~~~    </h5><h5>一切的一切隐藏在这片看似平静的海面之中~到底小狐狸会有怎样的际遇~！</h5><h4><br>让我们！拭目以待！！！</h4>");
+                    GameStart = true;
+                    model = state.start;
+                    document.getElementById('water').play();
+                }
+            }
+            //			I
+            if (GameStart == true) {
+                if (e && e.keyCode == 76) {
+                    if (Page == page.page1) {
+                        showDiv("<h5>魔法之书~！！！缓缓的打开~！！！</h5><h5>里面会是什么捏！！！</h5><h5>好奇的小狐狸崔睁大了眼睛！！！</h5><h5>一束微光从魔法书中射出！</h5><h5>要来了！小礼物的真实面貌！！！！！！</h5><h3>玛尼~玛尼~~~哄~！！！</h3>");
+                        pageState.page1 = true;
+                        model = state.start_Onto;
+                        document.getElementById('water').play();
+                    }
+                }
+                if (e && e.keyCode == 79) {
+                    if (Page == page.page2 && pageState.page1 == true) {
+                        showDiv("<h5>	小狐狸进入了梦里，小狐狸做了噩梦</h5><h5>	小狐狸遇见了不开心的事，小狐狸难过的在哭</h5><h5>	小狐狸失声痛哭 小狐狸无助的站着 让人心疼</h5><h5>睁大了眼睛的小狐狸 恐惧着眼前的影子 小狐狸 我的小狐狸</h5><h5>小狐狸为什么这么辛苦，一次一次的在受苦</h5><h5>想大声呼唤你 想一把抱住你 熊熊在呢</h5>");
+                        pageState.page2 = true;
+                        model = state.start_Onto;
+                        document.getElementById('water').play();
+                    }
+                }
+                if (e && e.keyCode == 86) {
+                    if (Page == page.page3 && pageState.page2 == true) {
+                        showDiv("<h5>熊熊 熊熊在呢 熊熊陪着你的<br>在小狐狸的身边 在靠近我的小狐狸</h5><h5>开心的小狐狸 难过的小狐狸 惊恐的小狐狸 都是最宝贝的小狐狸<br>是呆呆的熊熊 呆呆的走向小狐狸 呆呆的抱紧小狐狸 呆呆的喜欢小狐狸</h5><h5>小狐狸看不到熊熊的地方 熊熊也是在的捏 分身熊 符鬼熊 上天入地无敌熊<br>熊熊都陪着你的 吻掉小狐狸的眼泪</h5><h5>我们家的宝贝 是不能受苦的珍宝捏！！！<br>我是熊熊 喜欢小狐狸的熊熊 爱你的熊熊</h5><h5>你是最漂亮可爱厉害 超级宝贝小狐狸捏！！！<br>我要当小狐狸的后盾熊！！！</h5>");
+                        model = state.start_Onto;
+                        document.getElementById('water').play();
+
+                        pageState.page3 = true;
+                    }
+                }
+                if (e && e.keyCode == 69) {
+                    if (Page == page.page4 && pageState.page3 == true) {
+                        showDiv("<h5>兔兔：我是兔兔~！！！我吃掉了你的熊熊嘿嘿！！！<br>小狐狸：！！！人家的熊熊呜呜！！！还我的熊熊！！！</h5><h5>兔兔：喵喵！！！小狐狸乖乖~不要哭哭！！！我给你吐出来！！！<br>小狐狸：哎呀！脏死了！脏脏熊！你就是熊熊！！！哼哼！！！还想骗我！！！</h5><h5>兔兔：我是兔兔捏！我有长耳朵！我有大肚子！<br>小狐狸：说的好像我们家熊熊就没有打肚子了！！！你的耳朵是我送你的这个逗比！！！</h5><h5>兔兔：但是！我是一群兔兔捏！你看你看~！！！<br>小狐狸：哼哼！你自己说的你是分身熊！不乖的坏熊熊！快进来被我打屁屁！！！</h5><h5>小狐狸：我就是！聪明睿智崔！！！你这个！二丫！！！！！！</h5>");
+                        pageState.page4 = true;
+                        model = state.start_Onto;
+                        document.getElementById('water').play();
+
+                    }
+                }
+                if (e && e.keyCode == 67 && pageState.page4 == true) {
+                    isCj = true;
+                    document.getElementById('water').play();
+                }
+            }
+            if (e && e.keyCode == 27) {
+                document.getElementById('water').play();
+                closeDiv();
+                model = state.document;
+            }
+        };
+    </script>9
+</body>
+
+</html>

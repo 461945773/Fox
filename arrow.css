@@ -1,0 +1,76 @@
+.arrow-outer {
+    position: absolute;
+    height: 60px;
+    width: 30px;
+    overflow: hidden;
+}
+.arrow-shadow {
+    -webkit-box-shadow: 0 0 10px 0 #AAAAAA;
+    -webkit-transform: rotate(45deg);
+    background: none repeat scroll 0 0 #FFFFFF;
+    height: 40px;
+    left: 12px;
+    position: absolute;
+    top: 16px;
+    width: 40px;
+}
+.arrow-inner {
+    position: relative;
+    left: 17px;
+    top: 10px;
+    height: 40px;
+    width: 40px;
+    background: #fff;
+    border: 5px solid #ededed;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.arrow-inner:hover {
+    position: relative;
+    left: 17px;
+    top: 10px;
+    height: 40px;
+    width: 40px;
+    background: #fff;
+    border: 5px solid #00BBFF;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.arrow-shadow-right {
+    -webkit-box-shadow: 0 0 10px 0 #AAAAAA;
+    -webkit-transform: rotate(45deg);
+    background: none repeat scroll 0 0 #FFFFFF;
+    height: 40px;
+    left: -25px;
+    position: absolute;
+    top: 16px;
+    width: 40px;
+}
+.arrow-inner-right:hover {
+    position: relative;
+    left: -40px;
+    top: 10px;
+    height: 40px;
+    width: 40px;
+    background: #fff;
+    border: 5px solid #00BBFF;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.arrow-inner-right {
+    position: relative;
+    left: -40px;
+    top: 10px;
+    height: 40px;
+    width: 40px;
+    background: #fff;
+    border: 5px solid #ededed;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.arrow-outer {
+    position: absolute;
+    height: 60px;
+    width: 28px;
+    overflow: hidden;
+}

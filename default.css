@@ -1,0 +1,79 @@
+body,
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+}
+li {
+    list-style: none;
+}
+img {
+    border: none;
+    vertical-align: top;
+    width: 768px;
+    height: 480px;
+}
+#box {
+    width: 768px;
+    height: 480px;
+    position: relative;
+    margin: 30px auto;
+    overflow: hidden;
+}
+ul {
+    width: 768px;
+    height: 480px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+ul li {
+    width: 768px;
+    height: 480px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27);
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27);
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27);
+}
+ul li:before {
+    content: '';
+    position: absolute;
+    width: 90%;
+    height: 80%;
+    left: 35px;
+    bottom: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+ol {
+    z-index: 2;
+    width: 120px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+ol li {
+    border-radius: 100px;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin: 0 2px;
+    display: inline;
+    background: #fff;
+    color: darkblue;
+    line-height: 20px;
+    text-align: center;
+}
+ol .active {
+    background: darkblue;
+    color: #fff;
+}
+body {
+    text-align: center;
+    background: #fffeee;
+	color: darkred;
+}
